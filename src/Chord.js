@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import api from './api';
-import StartAudioContext from 'startaudiocontext';
 import * as Tone from 'tone'
 
 const notes = 
@@ -130,7 +129,7 @@ function Chord(){
     
     return(
         <>
-            {showAnswer && <button onClick= {playChord}>Play Chord</button>}
+            {showAnswer && <><button onClick= {playChord}>Play Chord</button> <br></br></>}
             {showAnswer && getAnswer()}
             {!showAnswer && getResult()}
             {!showAnswer && <button onClick={getNewChord}>Next</button>}

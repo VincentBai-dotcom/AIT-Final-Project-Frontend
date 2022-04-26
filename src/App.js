@@ -7,6 +7,7 @@ import Stats from './Stats';
 import { useEffect, useState } from 'react';
 import api from './api';
 import { useNavigate } from 'react-router-dom';
+import Interval from './Interval';
 
 function App() {
   const [username, setUsername] = useState(localStorage.getItem("username"));
@@ -29,6 +30,7 @@ function App() {
           {!username && <Link to="/login">Login</Link>}
           <Link to= "/chord">Chord</Link>
           <Link to= "/stats"> Stats</Link>
+          <Link to= "/interval">Interval</Link>
           {username && <button onClick={handleLogOut}>Log out</button>}
         </nav>
       </>
@@ -50,7 +52,9 @@ function App() {
         <Route path = "/" element = {home()}/>
         <Route path = "/login" element = {<Login/>}/> 
         <Route path = "/chord" element = {<Chord/>}/>
+        <Route path = "/interval" element = {<Interval/>}></Route>
         <Route path = "/stats" element = {<Stats/>}/>
+        
       </Routes>
     </div>
   );
