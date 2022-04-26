@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import api from './api';
+import StartAudioContext from 'startaudiocontext';
 import * as Tone from 'tone'
 
 const notes = 
@@ -23,7 +24,7 @@ const qualities =
 
 
 function Chord(){
-    const synth = new Tone.PolySynth(Tone.Synth).toDestination();
+    
     const [note, setNote] = useState(getRandomNote());
     const [quality, setQuality] = useState(getRandomQuality());
     const [answer, setAnswer] = useState("");
@@ -68,8 +69,13 @@ function Chord(){
     }
 
     async function playChord(){
+        const synth = new Tone.PolySynth(Tone.Synth).toDestination();
         await Tone.start()
+        if (Tone.context.state !== 'running') {
+            Tone.context.resume();
+          }
         synth.triggerAttackRelease(getChord(note,quality),"8n");
+        console.log("correct answer "+quality);
     }
     function getNewChord(){
         setNote(getRandomNote());
@@ -77,29 +83,38 @@ function Chord(){
         setShowAnswer(true);
     }
 
-    function answerButtonGenerator(index){
+    function answerButtonGenerator(index,key){
         return( 
-            <button onClick={() => {setAnswer(qualities[index]); submitAnswer()}}> {qualities[index]}</button>
+            <button key = {key} onClick={() => submitAnswer(qualities[index])}> {qualities[index]}</button>
         );
     }
 
 
-    function submitAnswer(){
+    async function submitAnswer(userAnswer){
+        setAnswer(userAnswer);
+        if(localStorage.getItem('username')){
+            api.post('stats/', {
+                username: localStorage.getItem('username'),
+                type: "chord",
+                quality: quality,
+                correct: userAnswer === quality
+            })
+            .then((res) =>{
+                console.log(res.data.stats);
+            })
+            .catch((err)=>{
+                console.log(err);
+            })
+        }
         setShowAnswer(false);
     }
 
     function getAnswer(){
         return (
             <>
-                {answerButtonGenerator(0)}
-                {answerButtonGenerator(1)}
-                {answerButtonGenerator(2)}
-                {answerButtonGenerator(3)}
-                {answerButtonGenerator(4)}
-                {answerButtonGenerator(5)}
-                {answerButtonGenerator(6)}
-                {answerButtonGenerator(7)}
-                {answerButtonGenerator(8)}
+                {Array.from(Array(9).keys()).map((index,key) => {
+                    return answerButtonGenerator(index,key);
+                })}
             </>
         );
     }

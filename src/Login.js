@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import api from './api';
+import { useNavigate } from 'react-router-dom';
 
 function Login(){
-        
+    const history = useNavigate();
     function logIn(){
         api.post('login/',{
             password: password,
@@ -12,6 +13,8 @@ function Login(){
             console.log(res);
             localStorage.setItem('token', res['data']['token']);
             localStorage.setItem('username', username);
+            history('/');
+            window.location.reload(false);
         })
         .catch((err)=>{console.log(err)});
     };
