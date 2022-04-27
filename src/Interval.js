@@ -67,7 +67,7 @@ function Interval(){
 
     function answerButtonGenerator(index,key){
         return( 
-            <button key = {key} onClick={() => submitAnswer(qualities[index])}> {qualities[index]}</button>
+            <button key = {key} onClick={() => submitAnswer(qualities[index])} className="m-1 inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"> {qualities[index]}</button>
         );
     }
 
@@ -102,19 +102,25 @@ function Interval(){
 
     function getResult(){
         if(quality === answer){
-            return (<p>Correct!</p>);
+            return (<div className="bg-green-100 rounded-lg py-5 px-6 mb-4 text-base text-green-700 mb-3" role="alert">
+            {"Correct !"}
+            </div>);
         }
         else {
-            return (<p>Incorrect, the answer is {quality}!</p>)
+            return (
+                <div className="bg-red-100 rounded-lg py-5 px-6 mb-4 text-base text-red-700 mb-3" role="alert">
+                {`Incorrect, the answer is ${quality}!`}
+                </div>)
         }
     }
 
     return(
         <>
-            {showAnswer && <><button onClick= {playInterval}>Play Interval</button> <br></br></>}
+            {showAnswer && <><button onClick= {playInterval} className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Play Interval</button> <br></br></>}
+            <br></br>
             {showAnswer && getAnswer()}
             {!showAnswer && getResult()}
-            {!showAnswer && <button onClick={getNewInterval}>Next</button>}
+            {!showAnswer && <button onClick={getNewInterval }className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Next</button>}
         </>
     );
 }
