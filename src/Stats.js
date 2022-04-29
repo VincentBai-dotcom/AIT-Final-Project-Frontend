@@ -19,7 +19,6 @@ function Stats(){
         })
         .then(res => {
             setStats(res["data"]);
-            console.log(stats);
             setLoading(false);
         })
         .catch((err) => {

@@ -81,7 +81,7 @@ function Interval(){
                 correct: userAnswer === quality
             })
             .then((res) =>{
-                console.log(res.data.stats);
+                console.log("Submitted");
             })
             .catch((err)=>{
                 console.log(err);

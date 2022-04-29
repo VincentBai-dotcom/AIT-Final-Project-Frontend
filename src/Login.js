@@ -12,7 +12,6 @@ function Login(){
             username: username
         })
         .then((res) =>{
-            console.log(res);
             localStorage.setItem('token', res['data']['token']);
             localStorage.setItem('username', username);
             history('/');
@@ -26,7 +25,7 @@ function Login(){
             username: username,
             password: password
         })
-        .then(res => {console.log(res); setMsg(res.data.msg)})
+        .then(res => {setMsg(res.data.msg)})
         .catch(err => {console.log(err);})
     }
     
